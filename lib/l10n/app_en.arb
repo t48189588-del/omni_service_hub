@@ -1,0 +1,10 @@
+{
+  "appName": "OmniService Hub",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Text displayed while things are loading"
+  }
+}
