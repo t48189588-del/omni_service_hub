@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/tenant_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
+import '../widgets/locale_switcher.dart';
 
 class RegisterScreen extends StatefulWidget {
   final VoidCallback onShowLogin;
@@ -48,6 +49,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: LocaleSwitcher(),
+                  ),
+                  const SizedBox(height: 16),
                   Text(
                     "Start Your Business",
                     textAlign: TextAlign.center,

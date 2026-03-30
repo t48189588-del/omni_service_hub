@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import '../models/service_model.dart';
 
 class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -47,5 +48,41 @@ class DatabaseService {
   // Fetch tenant info
   Future<DocumentSnapshot> getTenant(String tenantId) {
     return _db.collection('tenants').doc(tenantId).get();
+  }
+
+  // --- Service Management ---
+
+  Stream<List<ServiceModel>> getServices(String tenantId) {
+    return _db
+        .collection('tenants')
+        .doc(tenantId)
+        .collection('services')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => ServiceModel.fromFirestore(doc))
+            .toList());
+  }
+
+  Future<void> addService(String tenantId, ServiceModel service) async {
+    try {
+      await _db
+          .collection('tenants')
+          .doc(tenantId)
+          .collection('services')
+          .add(service.toMap());
+    } catch (e) {
+      debugPrint("DatabaseService Error (AddService): $e");
+      rethrow;
+    }
+  }
+
+  Future<void> deleteService(String tenantId, String serviceId) async {
+    await _db
+        .collection('tenants')
+        .doc(tenantId)
+        .collection('services')
+        .doc(serviceId)
+        .delete();
   }
 }

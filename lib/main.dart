@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'l10n/app_localizations.dart';
 
 import 'firebase_options.dart';
 import 'providers/tenant_provider.dart';
+import 'providers/locale_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
+import 'screens/services_screen.dart';
 import 'utils/regional_formatter.dart';
+import 'widgets/locale_switcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +23,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => TenantProvider()),
       ],
       child: const OmniServiceHubApp(),
@@ -32,9 +36,12 @@ class OmniServiceHubApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = context.watch<LocaleProvider>();
+
     return MaterialApp(
       title: 'OmniService Hub',
       debugShowCheckedModeBanner: false,
+      locale: localeProvider.locale,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,
@@ -117,12 +124,13 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tenantProvider = context.watch<TenantProvider>();
+    final localeProvider = context.watch<LocaleProvider>();
     final config = tenantProvider.tenantConfig;
     final l10n = AppLocalizations.of(context);
     
-    // Determine active locale and currency
-    final String currentLocale = Localizations.localeOf(context).toString();
-    final String currentCurrency = config?['config']?['currency'] ?? 'USD';
+    // Determine active locale and currency (linked to language selector)
+    final String currentLocale = localeProvider.locale.toString();
+    final String currentCurrency = localeProvider.getCurrencyForLocale();
 
     final formatter = RegionalFormatter(
       locale: currentLocale,
@@ -133,6 +141,7 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(config?['name'] ?? l10n?.app_title ?? 'Dashboard'),
         actions: [
+          const LocaleSwitcher(),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => context.read<TenantProvider>().logout(),
@@ -164,6 +173,7 @@ class DashboardScreen extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.payments_outlined),
                       title: const Text("Sample Price"),
+                      subtitle: Text("Linked to locale: $currentCurrency"),
                       trailing: Text(
                         formatter.formatCurrency(15000.0),
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -185,14 +195,19 @@ class DashboardScreen extends StatelessWidget {
               spacing: 16,
               children: [
                 ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ServicesScreen()),
+                    );
+                  },
+                  icon: const Icon(Icons.category_outlined),
+                  label: const Text('Manage Services'),
+                ),
+                ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.add_shopping_cart),
                   label: Text(l10n?.book_button ?? 'Book'),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search),
-                  label: Text(l10n?.select_service ?? 'Select'),
                 ),
               ],
             ),
