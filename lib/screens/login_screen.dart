@@ -62,17 +62,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Welcome back. Please sign in to continue.",
+                    l10n?.welcome_back ?? "Welcome back. Please sign in to continue.",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email Address',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n?.email_label ?? 'Email Address',
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (v) => (v == null || !v.contains('@')) ? 'Valid email required' : null,
                   ),
@@ -80,25 +80,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock_outline),
+                    decoration: InputDecoration(
+                      labelText: l10n?.password_label ?? 'Password',
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                     validator: (v) => (v == null || v.length < 6) ? 'Min 6 chars' : null,
                   ),
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: _login,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text('Sign In'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(l10n?.sign_in_button ?? 'Sign In'),
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: widget.onShowRegister,
-                    child: const Text("Don't have an account? Create a business"),
+                    child: Text(l10n?.no_account ?? "Don't have an account? Create a business"),
                   ),
                 ],
               ),

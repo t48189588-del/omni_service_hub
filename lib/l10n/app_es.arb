@@ -4,5 +4,22 @@
   "app_title": "Panel de OmniService Hub",
   "book_button": "Reservar Ahora",
   "payment_confirmed": "Pago Confirmado",
-  "select_service": "Seleccionar un Servicio"
+  "select_service": "Seleccionar un Servicio",
+  "welcome_back": "Bienvenido de nuevo. Por favor, inicie sesión para continuar.",
+  "email_label": "Correo Electrónico",
+  "password_label": "Contraseña",
+  "sign_in_button": "Iniciar Sesión",
+  "no_account": "¿No tienes una cuenta? Crear un negocio",
+  "start_business": "Inicia tu Negocio",
+  "create_business_desc": "Crea tu cuenta e inicializa tu centro de servicios en segundos.",
+  "business_name_label": "Nombre del Negocio",
+  "create_account_button": "Crear Cuenta",
+  "have_account": "¿Ya tienes una cuenta? Iniciar Sesión",
+  "manage_services": "Gestionar Servicios",
+  "add_service": "Agregar Nuevo Servicio",
+  "service_name": "Nombre del Servicio",
+  "description": "Descripción",
+  "price": "Precio",
+  "add": "Agregar",
+  "cancel": "Cancelar"
 }

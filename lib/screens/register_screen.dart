@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    "Start Your Business",
+                    l10n?.start_business ?? "Start Your Business",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
@@ -63,28 +63,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Create your account and initialize your service hub in seconds.",
+                  Text(
+                    l10n?.create_business_desc ?? "Create your account and initialize your service hub in seconds.",
                     textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 32),
                   TextFormField(
                     controller: _businessNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Business Name',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.business_outlined),
-                      hintText: 'e.g. Acme Plumbing',
+                    decoration: InputDecoration(
+                      labelText: l10n?.business_name_label ?? 'Business Name',
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.business_outlined),
+                      hintText: l10n?.business_name_hint ?? 'e.g. Acme Plumbing',
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? 'Business Name required' : null,
+                    validator: (v) => (v == null || v.isEmpty) ? (l10n?.business_name_required ?? 'Business Name required') : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Admin Email',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n?.email_label ?? 'Admin Email',
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (v) => (v == null || !v.contains('@')) ? 'Valid email required' : null,
                   ),
@@ -92,25 +93,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Secure Password',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock_outline),
+                    decoration: InputDecoration(
+                      labelText: l10n?.password_label ?? 'Secure Password',
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                     validator: (v) => (v == null || v.length < 6) ? 'Min 6 chars' : null,
                   ),
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: _register,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text('Create Account'),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(l10n?.create_account_button ?? 'Create Account'),
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: widget.onShowLogin,
-                    child: const Text("Already have an account? Sign In"),
+                    child: Text(l10n?.have_account ?? "Already have an account? Sign In"),
                   ),
                 ],
               ),

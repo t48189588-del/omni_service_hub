@@ -16,33 +16,36 @@ class ServicesScreen extends StatelessWidget {
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Add New Service'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(controller: nameController, decoration: const InputDecoration(labelText: 'Service Name')),
-            TextField(controller: descController, decoration: const InputDecoration(labelText: 'Description')),
-            TextField(controller: priceController, decoration: const InputDecoration(labelText: 'Price'), keyboardType: TextInputType.number),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () async {
-              final service = ServiceModel(
-                id: '',
-                name: nameController.text,
-                description: descController.text,
-                price: double.tryParse(priceController.text) ?? 0.0,
-              );
-              await DatabaseService().addService(tenantId, service);
-              if (context.mounted) Navigator.pop(context);
-            },
-            child: const Text('Add'),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context);
+        return AlertDialog(
+          title: Text(l10n?.add_service ?? 'Add New Service'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(controller: nameController, decoration: InputDecoration(labelText: l10n?.service_name ?? 'Service Name')),
+              TextField(controller: descController, decoration: InputDecoration(labelText: l10n?.description ?? 'Description')),
+              TextField(controller: priceController, decoration: InputDecoration(labelText: l10n?.price ?? 'Price'), keyboardType: TextInputType.number),
+            ],
           ),
-        ],
-      ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n?.cancel ?? 'Cancel')),
+            ElevatedButton(
+              onPressed: () async {
+                final service = ServiceModel(
+                  id: '',
+                  name: nameController.text,
+                  description: descController.text,
+                  price: double.tryParse(priceController.text) ?? 0.0,
+                );
+                await DatabaseService().addService(tenantId, service);
+                if (context.mounted) Navigator.pop(context);
+              },
+              child: Text(l10n?.add ?? 'Add'),
+            ),
+          ],
+        );
+      },
     );
   }
 

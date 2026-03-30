@@ -4,5 +4,22 @@
   "app_title": "OmniService Hub ダッシュボード",
   "book_button": "今すぐ予約",
   "payment_confirmed": "支払い完了",
-  "select_service": "サービスを選択"
+  "select_service": "サービスを選択",
+  "welcome_back": "おかえりなさい。続行するにはサインインしてください。",
+  "email_label": "メールアドレス",
+  "password_label": "パスワード",
+  "sign_in_button": "サインイン",
+  "no_account": "アカウントをお持ちでないですか？ビジネスを作成",
+  "start_business": "ビジネスを開始",
+  "create_business_desc": "アカウントを作成し、数秒でサービスハブを初期化します。",
+  "business_name_label": "ビジネス名",
+  "create_account_button": "アカウント作成",
+  "have_account": "すでにアカウントをお持ちですか？サインイン",
+  "manage_services": "サービス管理",
+  "add_service": "新しいサービスを追加",
+  "service_name": "サービス名",
+  "description": "説明",
+  "price": "価格",
+  "add": "追加",
+  "cancel": "キャンセル"
 }

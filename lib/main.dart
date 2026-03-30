@@ -202,7 +202,7 @@ class DashboardScreen extends StatelessWidget {
                     );
                   },
                   icon: const Icon(Icons.category_outlined),
-                  label: const Text('Manage Services'),
+                  label: Text(l10n?.manage_services ?? 'Manage Services'),
                 ),
                 ElevatedButton.icon(
                   onPressed: () {},

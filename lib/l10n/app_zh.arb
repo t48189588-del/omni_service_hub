@@ -4,5 +4,22 @@
   "app_title": "OmniService Hub 仪表板",
   "book_button": "立即预订",
   "payment_confirmed": "支付已确认",
-  "select_service": "选择服务"
+  "select_service": "选择服务",
+  "welcome_back": "欢迎回来。请登录以继续。",
+  "email_label": "电子邮件",
+  "password_label": "密码",
+  "sign_in_button": "登录",
+  "no_account": "还没有账号？创建业务",
+  "start_business": "开始您的业务",
+  "create_business_desc": "在几秒钟内创建您的账号并初始化您的服务中心。",
+  "business_name_label": "业务名称",
+  "create_account_button": "创建账号",
+  "have_account": "已经有账号了？登录",
+  "manage_services": "管理服务",
+  "add_service": "添加新服务",
+  "service_name": "服务名称",
+  "description": "描述",
+  "price": "价格",
+  "add": "添加",
+  "cancel": "取消"
 }

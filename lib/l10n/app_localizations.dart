@@ -138,6 +138,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a Service'**
   String get select_service;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back. Please sign in to continue.'**
+  String get welcome_back;
+
+  /// No description provided for @email_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get email_label;
+
+  /// No description provided for @password_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password_label;
+
+  /// No description provided for @sign_in_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get sign_in_button;
+
+  /// No description provided for @no_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? Create a business'**
+  String get no_account;
+
+  /// No description provided for @start_business.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Your Business'**
+  String get start_business;
+
+  /// No description provided for @create_business_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account and initialize your service hub in seconds.'**
+  String get create_business_desc;
+
+  /// No description provided for @business_name_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Name'**
+  String get business_name_label;
+
+  /// No description provided for @create_account_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get create_account_button;
+
+  /// No description provided for @have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign In'**
+  String get have_account;
+
+  /// No description provided for @manage_services.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Services'**
+  String get manage_services;
+
+  /// No description provided for @add_service.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Service'**
+  String get add_service;
+
+  /// No description provided for @service_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Name'**
+  String get service_name;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

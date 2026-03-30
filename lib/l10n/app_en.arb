@@ -4,5 +4,22 @@
   "app_title": "OmniService Hub Dashboard",
   "book_button": "Book Now",
   "payment_confirmed": "Payment Confirmed",
-  "select_service": "Select a Service"
+  "select_service": "Select a Service",
+  "welcome_back": "Welcome back. Please sign in to continue.",
+  "email_label": "Email Address",
+  "password_label": "Password",
+  "sign_in_button": "Sign In",
+  "no_account": "Don't have an account? Create a business",
+  "start_business": "Start Your Business",
+  "create_business_desc": "Create your account and initialize your service hub in seconds.",
+  "business_name_label": "Business Name",
+  "create_account_button": "Create Account",
+  "have_account": "Already have an account? Sign In",
+  "manage_services": "Manage Services",
+  "add_service": "Add New Service",
+  "service_name": "Service Name",
+  "description": "Description",
+  "price": "Price",
+  "add": "Add",
+  "cancel": "Cancel"
 }
