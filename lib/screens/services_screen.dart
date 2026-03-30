@@ -5,6 +5,7 @@ import '../services/database_service.dart';
 import '../models/service_model.dart';
 import '../utils/regional_formatter.dart';
 import '../providers/locale_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});

@@ -13,6 +13,8 @@
   "start_business": "Start Your Business",
   "create_business_desc": "Create your account and initialize your service hub in seconds.",
   "business_name_label": "Business Name",
+  "business_name_hint": "e.g. Acme Plumbing",
+  "business_name_required": "Business Name required",
   "create_account_button": "Create Account",
   "have_account": "Already have an account? Sign In",
   "manage_services": "Manage Services",

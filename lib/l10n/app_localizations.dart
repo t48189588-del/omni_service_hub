@@ -187,6 +187,18 @@ abstract class AppLocalizations {
   /// **'Business Name'**
   String get business_name_label;
 
+  /// No description provided for @business_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Acme Plumbing'**
+  String get business_name_hint;
+
+  /// No description provided for @business_name_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Name required'**
+  String get business_name_required;
+
   /// No description provided for @create_account_button.
   ///
   /// In en, this message translates to:

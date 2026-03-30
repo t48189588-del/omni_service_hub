@@ -13,6 +13,8 @@
   "start_business": "开始您的业务",
   "create_business_desc": "在几秒钟内创建您的账号并初始化您的服务中心。",
   "business_name_label": "业务名称",
+  "business_name_hint": "例如：Acme管道",
+  "business_name_required": "业务名称是必填项",
   "create_account_button": "创建账号",
   "have_account": "已经有账号了？登录",
   "manage_services": "管理服务",

@@ -52,6 +52,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get business_name_label => 'Business Name';
 
   @override
+  String get business_name_hint => 'e.g. Acme Plumbing';
+
+  @override
+  String get business_name_required => 'Business Name required';
+
+  @override
   String get create_account_button => 'Create Account';
 
   @override

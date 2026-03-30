@@ -51,6 +51,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get business_name_label => 'ビジネス名';
 
   @override
+  String get business_name_hint => '例: Acme配管';
+
+  @override
+  String get business_name_required => 'ビジネス名が必要です';
+
+  @override
   String get create_account_button => 'アカウント作成';
 
   @override

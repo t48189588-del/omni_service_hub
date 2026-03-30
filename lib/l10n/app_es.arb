@@ -13,6 +13,8 @@
   "start_business": "Inicia tu Negocio",
   "create_business_desc": "Crea tu cuenta e inicializa tu centro de servicios en segundos.",
   "business_name_label": "Nombre del Negocio",
+  "business_name_hint": "ej. Fontanería Acme",
+  "business_name_required": "Nombre del Negocio es requerido",
   "create_account_button": "Crear Cuenta",
   "have_account": "¿Ya tienes una cuenta? Iniciar Sesión",
   "manage_services": "Gestionar Servicios",

@@ -51,6 +51,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get business_name_label => '业务名称';
 
   @override
+  String get business_name_hint => '例如：Acme管道';
+
+  @override
+  String get business_name_required => '业务名称是必填项';
+
+  @override
   String get create_account_button => '创建账号';
 
   @override

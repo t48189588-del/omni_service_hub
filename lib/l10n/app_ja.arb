@@ -13,6 +13,8 @@
   "start_business": "ビジネスを開始",
   "create_business_desc": "アカウントを作成し、数秒でサービスハブを初期化します。",
   "business_name_label": "ビジネス名",
+  "business_name_hint": "例: Acme配管",
+  "business_name_required": "ビジネス名が必要です",
   "create_account_button": "アカウント作成",
   "have_account": "すでにアカウントをお持ちですか？サインイン",
   "manage_services": "サービス管理",
