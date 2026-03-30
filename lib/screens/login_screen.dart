@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    l10n?.welcome_back ?? "Welcome back. Please sign in to continue.",
+                    l10n?.welcomeBack ?? "Welcome back. Please sign in to continue.",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: l10n?.email_label ?? 'Email Address',
+                      labelText: l10n?.emailLabel ?? 'Email Address',
                       border: const OutlineInputBorder(),
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: l10n?.password_label ?? 'Password',
+                      labelText: l10n?.passwordLabel ?? 'Password',
                       border: const OutlineInputBorder(),
                       prefixIcon: const Icon(Icons.lock_outline),
                     ),
@@ -92,13 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _login,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text(l10n?.sign_in_button ?? 'Sign In'),
+                      child: Text(l10n?.signInButton ?? 'Sign In'),
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: widget.onShowRegister,
-                    child: Text(l10n?.no_account ?? "Don't have an account? Create a business"),
+                    child: Text(l10n?.noAccount ?? "Don't have an account? Create a business"),
                   ),
                 ],
               ),

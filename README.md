@@ -4,32 +4,29 @@
 
 ## 🚀 Key Features
 
--   **Multi-Tenancy Architecture**: Strict data isolation using a "Shared Collection with Silo Sub-collections" model. All tenant data is securely partitioned at the database level.
--   **Strict Security**: Firestore Security Rules ensure users only access the data associated with their specific `tenantId`.
--   **Global Reach (i18n)**: Out-of-the-box support for multiple languages:
-    -   English (Default)
-    -   Spanish
-    -   Japanese
-    -   Simplified Chinese (zh-Hans)
--   **State Management**: Centralized `TenantProvider` managing authentication and active business context.
+-   **Advanced Booking Engine**: 
+    -   Integrated **2-step selection** (Date & Time) with native Flutter pickers.
+    -   **Conflict Prevention**: Real-time availability checks before booking.
+    -   **Automatic Buffer**: A mandatory **10-minute break** is added between appointments for business preparation.
+-   **Owner Management Dashboard**: 
+    -   **Service Lifecycle**: Full CRUD (Create, Read, Update, Delete) for services including custom durations and prices.
+    -   **Appointment Workflow**: Dedicated interface for owners to **Approve**, **Cancel**, or view pending bookings.
+-   **Global Reach (i18n)**: Standardized localization audit with full support for:
+    -   English, Spanish, Japanese, and Simplified Chinese.
+    -   **Reactive UI**: Dashboard, currency (0 decimals for JPY, 2 for USD), and date formats update instantly.
+-   **Strict Multi-Tenancy**: Data isolation using siloed sub-collections under each `tenantId`.
 
 ---
 
 ## 🛠 Tech Stack
 
 -   **Frontend**: [Flutter](https://flutter.dev/) (SDK ^3.11.3)
--   **Backend**: [Firebase](https://firebase.google.com/) (Auth, Firestore, Hosting)
+-   **Backend**: [Firebase](https://firebase.google.com/) (Auth, Firestore)
 -   **State Management**: [Provider](https://pub.dev/packages/provider)
 
 ---
 
 ## 🏗 Getting Started
-
-### Prerequisites
-
--   [Flutter SDK](https://docs.flutter.dev/get-started/install) installed.
--   [Firebase CLI](https://firebase.google.com/docs/cli) installed and logged in (`firebase login`).
--   [FlutterFire CLI](https://firebase.google.com/docs/flutter/setup?platform=ios#installing-the-cli) installed and available in your `PATH`.
 
 ### Local Setup
 
@@ -44,42 +41,26 @@
     flutter pub get
     ```
 
-3.  **Configure Firebase (Important)**:
-    The project currently uses **placeholder** credentials. To connect it to your own Firebase project:
+3.  **Generate Localizations**:
     ```bash
-    flutterfire configure
+    flutter gen-l10n
     ```
-    *This will regenerate `lib/firebase_options.dart` with your unique project keys.*
 
 4.  **Run the app**:
     ```bash
-    flutter run
+    flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080
     ```
 
 ---
 
-## 🔐 Security Rules & Multi-Tenancy
+## 🔐 Security Rules
 
-The data structure follows this strictly root-level isolation:
+The data structure follows strict root-level isolation:
 -   `/users/{userId}`: Contains `tenantId` mapping.
--   `/tenants/{tenantId}`: Business-specific metadata and configurations.
--   `/tenants/{tenantId}/customers/...`: Siloed customer lists.
--   `/tenants/{tenantId}/services/...`: Siloed service catalogs.
+-   `/tenants/{tenantId}/services/...`: Publicly viewable catalog.
+-   `/tenants/{tenantId}/appointments/...`: Managed by owners, created by customers.
 
-Security rules are located in `firestore.rules`. Ensure you deploy these to your Firebase project:
-```bash
-firebase deploy --only firestore:rules
-```
-
----
-
-## 🌍 Localization (i18n)
-
-Localization files are stored in `lib/l10n/` as `.arb` (Application Resource Bundle) files.
-
-To update or add translations:
-1.  Edit the respective `app_XX.arb` file.
-2.  Run `flutter gen-l10n` to regenerate the localization classes.
+Security rules in `firestore.rules` enforce these permissions.
 
 ---
 
@@ -88,9 +69,12 @@ To update or add translations:
 ```text
 lib/
  ├── l10n/              # Language translations (.arb)
- ├── providers/         # Global state management (TenantProvider)
- ├── firebase_options.dart # Firebase configuration (run flutterfire configure to update)
- └── main.dart          # App entry point & initialization
+ ├── models/            # Data models (Service, Appointment)
+ ├── providers/         # Global state (TenantProvider, LocaleProvider)
+ ├── screens/           # UI Screens (Login, Dashboard, Services, Appointments, Booking)
+ ├── services/          # Firebase logic (DatabaseService)
+ ├── utils/             # Formatters (RegionalFormatter)
+ └── main.dart          # App entry point & routing
 ```
 
 Developed as part of the **OmniService Hub** ecosystem.

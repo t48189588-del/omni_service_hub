@@ -33,7 +33,6 @@ class TenantProvider with ChangeNotifier {
 
   // Main background loading
   Future<void> _loadTenant(String uid) async {
-    if (_isLoading) return;
     _isLoading = true;
     notifyListeners();
 
@@ -79,9 +78,11 @@ class TenantProvider with ChangeNotifier {
         // Note: authStateChanges listener will trigger _loadTenant
       }
     } catch (e) {
+      debugPrint("Registration error: $e");
+      rethrow;
+    } finally {
       _isLoading = false;
       notifyListeners();
-      rethrow;
     }
   }
 
@@ -91,9 +92,11 @@ class TenantProvider with ChangeNotifier {
     try {
       await _authService.signIn(email, password);
     } catch (e) {
+      debugPrint("Login error: $e");
+      rethrow;
+    } finally {
       _isLoading = false;
       notifyListeners();
-      rethrow;
     }
   }
 

@@ -109,125 +109,221 @@ abstract class AppLocalizations {
   /// **'OmniService Hub'**
   String get appName;
 
+  /// No description provided for @businessActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Active'**
+  String get businessActive;
+
+  /// No description provided for @tenantIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tenant ID'**
+  String get tenantIdLabel;
+
+  /// No description provided for @regionalPrecision.
+  ///
+  /// In en, this message translates to:
+  /// **'Regional Precision'**
+  String get regionalPrecision;
+
+  /// No description provided for @samplePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample Price'**
+  String get samplePrice;
+
+  /// No description provided for @currentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Date'**
+  String get currentDate;
+
+  /// No description provided for @durationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration (min)'**
+  String get durationLabel;
+
+  /// No description provided for @conflictError.
+  ///
+  /// In en, this message translates to:
+  /// **'This slot is already booked. Please choose another.'**
+  String get conflictError;
+
+  /// No description provided for @bookingSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking confirmed! Awaiting approval.'**
+  String get bookingSuccess;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmed;
+
+  /// No description provided for @cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelled;
+
+  /// No description provided for @approve.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get approve;
+
+  /// No description provided for @reschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule'**
+  String get reschedule;
+
   /// No description provided for @loading.
   ///
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
 
-  /// No description provided for @app_title.
+  /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
   /// **'OmniService Hub Dashboard'**
-  String get app_title;
+  String get appTitle;
 
-  /// No description provided for @book_button.
+  /// No description provided for @bookNow.
   ///
   /// In en, this message translates to:
   /// **'Book Now'**
-  String get book_button;
+  String get bookNow;
 
-  /// No description provided for @payment_confirmed.
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @currencySymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'\$'**
+  String get currencySymbol;
+
+  /// No description provided for @paymentConfirmed.
   ///
   /// In en, this message translates to:
   /// **'Payment Confirmed'**
-  String get payment_confirmed;
+  String get paymentConfirmed;
 
-  /// No description provided for @select_service.
+  /// No description provided for @selectService.
   ///
   /// In en, this message translates to:
   /// **'Select a Service'**
-  String get select_service;
+  String get selectService;
 
-  /// No description provided for @welcome_back.
+  /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:
   /// **'Welcome back. Please sign in to continue.'**
-  String get welcome_back;
+  String get welcomeBack;
 
-  /// No description provided for @email_label.
+  /// No description provided for @emailLabel.
   ///
   /// In en, this message translates to:
   /// **'Email Address'**
-  String get email_label;
+  String get emailLabel;
 
-  /// No description provided for @password_label.
+  /// No description provided for @passwordLabel.
   ///
   /// In en, this message translates to:
   /// **'Password'**
-  String get password_label;
+  String get passwordLabel;
 
-  /// No description provided for @sign_in_button.
+  /// No description provided for @signInButton.
   ///
   /// In en, this message translates to:
   /// **'Sign In'**
-  String get sign_in_button;
+  String get signInButton;
 
-  /// No description provided for @no_account.
+  /// No description provided for @noAccount.
   ///
   /// In en, this message translates to:
   /// **'Don\'t have an account? Create a business'**
-  String get no_account;
+  String get noAccount;
 
-  /// No description provided for @start_business.
+  /// No description provided for @startBusiness.
   ///
   /// In en, this message translates to:
   /// **'Start Your Business'**
-  String get start_business;
+  String get startBusiness;
 
-  /// No description provided for @create_business_desc.
+  /// No description provided for @createBusinessDesc.
   ///
   /// In en, this message translates to:
   /// **'Create your account and initialize your service hub in seconds.'**
-  String get create_business_desc;
+  String get createBusinessDesc;
 
-  /// No description provided for @business_name_label.
+  /// No description provided for @businessNameLabel.
   ///
   /// In en, this message translates to:
   /// **'Business Name'**
-  String get business_name_label;
+  String get businessNameLabel;
 
-  /// No description provided for @business_name_hint.
+  /// No description provided for @businessNameHint.
   ///
   /// In en, this message translates to:
   /// **'e.g. Acme Plumbing'**
-  String get business_name_hint;
+  String get businessNameHint;
 
-  /// No description provided for @business_name_required.
+  /// No description provided for @businessNameRequired.
   ///
   /// In en, this message translates to:
   /// **'Business Name required'**
-  String get business_name_required;
+  String get businessNameRequired;
 
-  /// No description provided for @create_account_button.
+  /// No description provided for @createAccountButton.
   ///
   /// In en, this message translates to:
   /// **'Create Account'**
-  String get create_account_button;
+  String get createAccountButton;
 
-  /// No description provided for @have_account.
+  /// No description provided for @haveAccount.
   ///
   /// In en, this message translates to:
   /// **'Already have an account? Sign In'**
-  String get have_account;
+  String get haveAccount;
 
-  /// No description provided for @manage_services.
+  /// No description provided for @manageServices.
   ///
   /// In en, this message translates to:
   /// **'Manage Services'**
-  String get manage_services;
+  String get manageServices;
 
-  /// No description provided for @add_service.
+  /// No description provided for @manageAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Appointments'**
+  String get manageAppointments;
+
+  /// No description provided for @addService.
   ///
   /// In en, this message translates to:
   /// **'Add New Service'**
-  String get add_service;
+  String get addService;
 
-  /// No description provided for @service_name.
+  /// No description provided for @serviceName.
   ///
   /// In en, this message translates to:
   /// **'Service Name'**
-  String get service_name;
+  String get serviceName;
 
   /// No description provided for @description.
   ///
@@ -252,6 +348,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this service?'**
+  String get confirmDelete;
 }
 
 class _AppLocalizationsDelegate

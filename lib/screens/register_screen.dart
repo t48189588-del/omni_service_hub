@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    l10n?.start_business ?? "Start Your Business",
+                    l10n?.startBusiness ?? "Start Your Business",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    l10n?.create_business_desc ?? "Create your account and initialize your service hub in seconds.",
+                    l10n?.createBusinessDesc ?? "Create your account and initialize your service hub in seconds.",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -72,18 +72,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _businessNameController,
                     decoration: InputDecoration(
-                      labelText: l10n?.business_name_label ?? 'Business Name',
+                      labelText: l10n?.businessNameLabel ?? 'Business Name',
                       border: const OutlineInputBorder(),
                       prefixIcon: const Icon(Icons.business_outlined),
-                      hintText: l10n?.business_name_hint ?? 'e.g. Acme Plumbing',
+                      hintText: l10n?.businessNameHint ?? 'e.g. Acme Plumbing',
                     ),
-                    validator: (v) => (v == null || v.isEmpty) ? (l10n?.business_name_required ?? 'Business Name required') : null,
+                    validator: (v) => (v == null || v.isEmpty) ? (l10n?.businessNameRequired ?? 'Business Name required') : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: l10n?.email_label ?? 'Admin Email',
+                      labelText: l10n?.emailLabel ?? 'Admin Email',
                       border: const OutlineInputBorder(),
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: l10n?.password_label ?? 'Secure Password',
+                      labelText: l10n?.passwordLabel ?? 'Secure Password',
                       border: const OutlineInputBorder(),
                       prefixIcon: const Icon(Icons.lock_outline),
                     ),
@@ -105,13 +105,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: _register,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text(l10n?.create_account_button ?? 'Create Account'),
+                      child: Text(l10n?.createAccountButton ?? 'Create Account'),
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: widget.onShowLogin,
-                    child: Text(l10n?.have_account ?? "Already have an account? Sign In"),
+                    child: Text(l10n?.haveAccount ?? "Already have an account? Sign In"),
                   ),
                 ],
               ),

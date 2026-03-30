@@ -12,64 +12,112 @@ class AppLocalizationsJa extends AppLocalizations {
   String get appName => 'OmniService Hub';
 
   @override
+  String get businessActive => 'ビジネス有効';
+
+  @override
+  String get tenantIdLabel => 'テナントID';
+
+  @override
+  String get regionalPrecision => '地域の書式設定';
+
+  @override
+  String get samplePrice => 'サンプル価格';
+
+  @override
+  String get currentDate => '現在の日付';
+
+  @override
+  String get durationLabel => '所要時間（分）';
+
+  @override
+  String get conflictError => 'この枠はすでに予約されています。別の時間を選択してください。';
+
+  @override
+  String get bookingSuccess => '予約が確定しました！承認待ちです。';
+
+  @override
+  String get pending => '保留中';
+
+  @override
+  String get confirmed => '承認済み';
+
+  @override
+  String get cancelled => 'キャンセル';
+
+  @override
+  String get approve => '承認';
+
+  @override
+  String get reschedule => '再スケジュール';
+
+  @override
   String get loading => '読み込み中...';
 
   @override
-  String get app_title => 'OmniService Hub ダッシュボード';
+  String get appTitle => 'OmniService Hub ダッシュボード';
 
   @override
-  String get book_button => '今すぐ予約';
+  String get bookNow => '今すぐ予約';
 
   @override
-  String get payment_confirmed => '支払い完了';
+  String get settings => '設定';
 
   @override
-  String get select_service => 'サービスを選択';
+  String get currencySymbol => '￥';
 
   @override
-  String get welcome_back => 'おかえりなさい。続行するにはサインインしてください。';
+  String get paymentConfirmed => '支払いが完了しました';
 
   @override
-  String get email_label => 'メールアドレス';
+  String get selectService => 'サービスを選択';
 
   @override
-  String get password_label => 'パスワード';
+  String get welcomeBack => 'おかえりなさい。サインインして続行してください。';
 
   @override
-  String get sign_in_button => 'サインイン';
+  String get emailLabel => 'メールアドレス';
 
   @override
-  String get no_account => 'アカウントをお持ちでないですか？ビジネスを作成';
+  String get passwordLabel => 'パスワード';
 
   @override
-  String get start_business => 'ビジネスを開始';
+  String get signInButton => 'サインイン';
 
   @override
-  String get create_business_desc => 'アカウントを作成し、数秒でサービスハブを初期化します。';
+  String get noAccount => 'アカウントをお持ちでないですか？ビジネスを作成';
 
   @override
-  String get business_name_label => 'ビジネス名';
+  String get startBusiness => 'ビジネスを開始';
 
   @override
-  String get business_name_hint => '例: Acme配管';
+  String get createBusinessDesc => '数秒でアカウントを作成し、サービスハブを初期化します。';
 
   @override
-  String get business_name_required => 'ビジネス名が必要です';
+  String get businessNameLabel => 'ビジネス名';
 
   @override
-  String get create_account_button => 'アカウント作成';
+  String get businessNameHint => '例：アクメ配管';
 
   @override
-  String get have_account => 'すでにアカウントをお持ちですか？サインイン';
+  String get businessNameRequired => 'ビジネス名は必須です';
 
   @override
-  String get manage_services => 'サービス管理';
+  String get createAccountButton => 'アカウント作成';
 
   @override
-  String get add_service => '新しいサービスを追加';
+  String get haveAccount => 'すでにアカウントをお持ちですか？サインイン';
 
   @override
-  String get service_name => 'サービス名';
+  String get manageServices => 'サービス管理';
+
+  @override
+  String get manageAppointments => '予約管理';
+
+  @override
+  String get addService => '新しいサービスを追加';
+
+  @override
+  String get serviceName => 'サービス名';
 
   @override
   String get description => '説明';
@@ -82,4 +130,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cancel => 'キャンセル';
+
+  @override
+  String get edit => '編集';
+
+  @override
+  String get delete => '削除';
+
+  @override
+  String get confirmDelete => 'このサービスを削除してもよろしいですか？';
 }

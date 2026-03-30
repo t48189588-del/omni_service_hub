@@ -12,65 +12,114 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'OmniService Hub';
 
   @override
+  String get businessActive => 'Business Active';
+
+  @override
+  String get tenantIdLabel => 'Tenant ID';
+
+  @override
+  String get regionalPrecision => 'Regional Precision';
+
+  @override
+  String get samplePrice => 'Sample Price';
+
+  @override
+  String get currentDate => 'Current Date';
+
+  @override
+  String get durationLabel => 'Duration (min)';
+
+  @override
+  String get conflictError =>
+      'This slot is already booked. Please choose another.';
+
+  @override
+  String get bookingSuccess => 'Booking confirmed! Awaiting approval.';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get confirmed => 'Confirmed';
+
+  @override
+  String get cancelled => 'Cancelled';
+
+  @override
+  String get approve => 'Approve';
+
+  @override
+  String get reschedule => 'Reschedule';
+
+  @override
   String get loading => 'Loading...';
 
   @override
-  String get app_title => 'OmniService Hub Dashboard';
+  String get appTitle => 'OmniService Hub Dashboard';
 
   @override
-  String get book_button => 'Book Now';
+  String get bookNow => 'Book Now';
 
   @override
-  String get payment_confirmed => 'Payment Confirmed';
+  String get settings => 'Settings';
 
   @override
-  String get select_service => 'Select a Service';
+  String get currencySymbol => '\$';
 
   @override
-  String get welcome_back => 'Welcome back. Please sign in to continue.';
+  String get paymentConfirmed => 'Payment Confirmed';
 
   @override
-  String get email_label => 'Email Address';
+  String get selectService => 'Select a Service';
 
   @override
-  String get password_label => 'Password';
+  String get welcomeBack => 'Welcome back. Please sign in to continue.';
 
   @override
-  String get sign_in_button => 'Sign In';
+  String get emailLabel => 'Email Address';
 
   @override
-  String get no_account => 'Don\'t have an account? Create a business';
+  String get passwordLabel => 'Password';
 
   @override
-  String get start_business => 'Start Your Business';
+  String get signInButton => 'Sign In';
 
   @override
-  String get create_business_desc =>
+  String get noAccount => 'Don\'t have an account? Create a business';
+
+  @override
+  String get startBusiness => 'Start Your Business';
+
+  @override
+  String get createBusinessDesc =>
       'Create your account and initialize your service hub in seconds.';
 
   @override
-  String get business_name_label => 'Business Name';
+  String get businessNameLabel => 'Business Name';
 
   @override
-  String get business_name_hint => 'e.g. Acme Plumbing';
+  String get businessNameHint => 'e.g. Acme Plumbing';
 
   @override
-  String get business_name_required => 'Business Name required';
+  String get businessNameRequired => 'Business Name required';
 
   @override
-  String get create_account_button => 'Create Account';
+  String get createAccountButton => 'Create Account';
 
   @override
-  String get have_account => 'Already have an account? Sign In';
+  String get haveAccount => 'Already have an account? Sign In';
 
   @override
-  String get manage_services => 'Manage Services';
+  String get manageServices => 'Manage Services';
 
   @override
-  String get add_service => 'Add New Service';
+  String get manageAppointments => 'Manage Appointments';
 
   @override
-  String get service_name => 'Service Name';
+  String get addService => 'Add New Service';
+
+  @override
+  String get serviceName => 'Service Name';
 
   @override
   String get description => 'Description';
@@ -83,4 +132,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get confirmDelete => 'Are you sure you want to delete this service?';
 }

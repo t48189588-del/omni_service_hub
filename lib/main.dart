@@ -10,6 +10,8 @@ import 'providers/locale_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/services_screen.dart';
+import 'screens/booking_page.dart';
+import 'screens/appointments_screen.dart';
 import 'utils/regional_formatter.dart';
 import 'widgets/locale_switcher.dart';
 
@@ -42,6 +44,22 @@ class OmniServiceHubApp extends StatelessWidget {
       title: 'OmniService Hub',
       debugShowCheckedModeBanner: false,
       locale: localeProvider.locale,
+      onGenerateRoute: (settings) {
+        if (settings.name == '/booking') {
+          final tenantId = settings.arguments as String?;
+          if (tenantId != null) {
+            return MaterialPageRoute(
+              builder: (context) => BookingPage(tenantId: tenantId),
+            );
+          }
+        }
+        if (settings.name == '/appointments') {
+          return MaterialPageRoute(
+            builder: (context) => const AppointmentsScreen(),
+          );
+        }
+        return null;
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,
@@ -139,9 +157,17 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(config?['name'] ?? l10n?.app_title ?? 'Dashboard'),
+        title: Text(config?['name'] ?? l10n?.appTitle ?? 'Dashboard'),
         actions: [
           const LocaleSwitcher(),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(l10n?.settings ?? 'Settings coming soon')),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => context.read<TenantProvider>().logout(),
@@ -155,11 +181,11 @@ class DashboardScreen extends StatelessWidget {
             const Icon(Icons.business_center_outlined, size: 64, color: Colors.indigo),
             const SizedBox(height: 16),
             Text(
-              "Business Active", 
+              l10n?.businessActive ?? "Business Active", 
               style: Theme.of(context).textTheme.headlineSmall
             ),
             const SizedBox(height: 8),
-            Text("Tenant ID: ${tenantProvider.tenantId}"),
+            Text("${l10n?.tenantIdLabel ?? 'Tenant ID'}: ${tenantProvider.tenantId}"),
             const SizedBox(height: 32),
             
             // Regional Formatting Demo
@@ -168,12 +194,12 @@ class DashboardScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Text("Regional Precision", style: Theme.of(context).textTheme.titleMedium),
+                    Text(l10n?.regionalPrecision ?? "Regional Precision", style: Theme.of(context).textTheme.titleMedium),
                     const Divider(),
                     ListTile(
                       leading: const Icon(Icons.payments_outlined),
-                      title: const Text("Sample Price"),
-                      subtitle: Text("Linked to locale: $currentCurrency"),
+                      title: Text(l10n?.samplePrice ?? "Sample Price"),
+                      subtitle: Text("${l10n?.currencySymbol ?? '\$'} ($currentCurrency)"),
                       trailing: Text(
                         formatter.formatCurrency(15000.0),
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -181,7 +207,7 @@ class DashboardScreen extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.calendar_today_outlined),
-                      title: const Text("Current Date"),
+                      title: Text(l10n?.currentDate ?? "Current Date"),
                       trailing: Text(formatter.formatDate(DateTime.now())),
                     ),
                   ],
@@ -202,12 +228,22 @@ class DashboardScreen extends StatelessWidget {
                     );
                   },
                   icon: const Icon(Icons.category_outlined),
-                  label: Text(l10n?.manage_services ?? 'Manage Services'),
+                  label: Text(l10n?.manageServices ?? 'Manage Services'),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/appointments');
+                  },
+                  icon: const Icon(Icons.calendar_month_outlined),
+                  label: Text(l10n?.manageAppointments ?? 'Manage Appointments'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Navigate to customer view
+                    Navigator.pushNamed(context, '/booking', arguments: tenantProvider.tenantId);
+                  },
                   icon: const Icon(Icons.add_shopping_cart),
-                  label: Text(l10n?.book_button ?? 'Book'),
+                  label: Text(l10n?.bookNow ?? 'Book'),
                 ),
               ],
             ),

@@ -12,66 +12,115 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appName => 'OmniService Hub';
 
   @override
+  String get businessActive => 'Negocio Activo';
+
+  @override
+  String get tenantIdLabel => 'ID de Inquilino';
+
+  @override
+  String get regionalPrecision => 'Precisión Regional';
+
+  @override
+  String get samplePrice => 'Precio de Muestra';
+
+  @override
+  String get currentDate => 'Fecha Actual';
+
+  @override
+  String get durationLabel => 'Duración (min)';
+
+  @override
+  String get conflictError =>
+      'Este horario ya está reservado. Por favor, elige otro.';
+
+  @override
+  String get bookingSuccess => '¡Reserva confirmada! Pendiente de aprobación.';
+
+  @override
+  String get pending => 'Pendiente';
+
+  @override
+  String get confirmed => 'Confirmado';
+
+  @override
+  String get cancelled => 'Cancelado';
+
+  @override
+  String get approve => 'Aprobar';
+
+  @override
+  String get reschedule => 'Reprogramar';
+
+  @override
   String get loading => 'Cargando...';
 
   @override
-  String get app_title => 'Panel de OmniService Hub';
+  String get appTitle => 'Panel de OmniService Hub';
 
   @override
-  String get book_button => 'Reservar Ahora';
+  String get bookNow => 'Reservar Ahora';
 
   @override
-  String get payment_confirmed => 'Pago Confirmado';
+  String get settings => 'Configuración';
 
   @override
-  String get select_service => 'Seleccionar un Servicio';
+  String get currencySymbol => '\$';
 
   @override
-  String get welcome_back =>
+  String get paymentConfirmed => 'Pago Confirmado';
+
+  @override
+  String get selectService => 'Seleccionar un Servicio';
+
+  @override
+  String get welcomeBack =>
       'Bienvenido de nuevo. Por favor, inicie sesión para continuar.';
 
   @override
-  String get email_label => 'Correo Electrónico';
+  String get emailLabel => 'Correo Electrónico';
 
   @override
-  String get password_label => 'Contraseña';
+  String get passwordLabel => 'Contraseña';
 
   @override
-  String get sign_in_button => 'Iniciar Sesión';
+  String get signInButton => 'Iniciar Sesión';
 
   @override
-  String get no_account => '¿No tienes una cuenta? Crear un negocio';
+  String get noAccount => '¿No tienes una cuenta? Crear un negocio';
 
   @override
-  String get start_business => 'Inicia tu Negocio';
+  String get startBusiness => 'Inicia tu Negocio';
 
   @override
-  String get create_business_desc =>
+  String get createBusinessDesc =>
       'Crea tu cuenta e inicializa tu centro de servicios en segundos.';
 
   @override
-  String get business_name_label => 'Nombre del Negocio';
+  String get businessNameLabel => 'Nombre del Negocio';
 
   @override
-  String get business_name_hint => 'ej. Fontanería Acme';
+  String get businessNameHint => 'ej. Fontanería Acme';
 
   @override
-  String get business_name_required => 'Nombre del Negocio es requerido';
+  String get businessNameRequired => 'Nombre del Negocio es requerido';
 
   @override
-  String get create_account_button => 'Crear Cuenta';
+  String get createAccountButton => 'Crear Cuenta';
 
   @override
-  String get have_account => '¿Ya tienes una cuenta? Iniciar Sesión';
+  String get haveAccount => '¿Ya tienes una cuenta? Iniciar Sesión';
 
   @override
-  String get manage_services => 'Gestionar Servicios';
+  String get manageServices => 'Gestionar Servicios';
 
   @override
-  String get add_service => 'Agregar Nuevo Servicio';
+  String get manageAppointments => 'Gestionar Citas';
 
   @override
-  String get service_name => 'Nombre del Servicio';
+  String get addService => 'Agregar Nuevo Servicio';
+
+  @override
+  String get serviceName => 'Nombre del Servicio';
 
   @override
   String get description => 'Descripción';
@@ -84,4 +133,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cancel => 'Cancelar';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get confirmDelete =>
+      '¿Estás seguro de que quieres eliminar este servicio?';
 }

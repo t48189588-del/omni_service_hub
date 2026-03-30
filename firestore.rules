@@ -22,15 +22,23 @@ service cloud.firestore {
 
     // Tenants Collection and sub-collections
     match /tenants/{tenantId} {
-      // Allow creation of a new tenant document during onboarding
+      allow read: if true; // Allow public to see business name/config
       allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tenantId == tenantId;
       
-      // Allow read/write if the user's assigned tenantId matches the document's tenantId
-      allow read, write: if request.auth != null && getUserTenantId() == tenantId;
-      
-      // Protect any nested sub-collections (e.g., /customers, /services) under the tenant
-      match /{document=**} {
-        allow read, write: if request.auth != null && getUserTenantId() == tenantId;
+      // Services: Public read, Owner write
+      match /services/{serviceId} {
+        allow read: if true;
+        allow write: if request.auth != null && 
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tenantId == tenantId;
+      }
+
+      // Appointments: Public create, Owner full access
+      match /appointments/{appId} {
+        allow create: if true;
+        allow read, update, delete: if request.auth != null && 
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tenantId == tenantId;
       }
     }
   }
