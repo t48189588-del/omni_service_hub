@@ -7,15 +7,25 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.tenantId;
     }
 
-    // Users Collection: Users can only read their own metadata document
+    // Users Collection: Support registration bootstrap
     match /users/{uid} {
+      // Allow read if it's the user's own document
       allow read: if request.auth != null && request.auth.uid == uid;
-      allow write: if false; // Only manageable via secure backend admin scripts
+      
+      // Allow create if the user is authenticated, 
+      // the UID matches, and they don't already have a profile.
+      allow create: if request.auth != null && request.auth.uid == uid;
+      
+      // Admin/Staff updates (needs future refined logic)
+      allow update: if request.auth != null && request.auth.uid == uid;
     }
 
     // Tenants Collection and sub-collections
     match /tenants/{tenantId} {
-      // Allow access if the user's assigned tenantId matches the document's tenantId
+      // Allow creation of a new tenant document during onboarding
+      allow create: if request.auth != null;
+      
+      // Allow read/write if the user's assigned tenantId matches the document's tenantId
       allow read, write: if request.auth != null && getUserTenantId() == tenantId;
       
       // Protect any nested sub-collections (e.g., /customers, /services) under the tenant

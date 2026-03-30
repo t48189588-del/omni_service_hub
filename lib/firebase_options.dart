@@ -18,10 +18,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -35,28 +32,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'placeholder-api-key',
-    appId: 'placeholder-app-id',
-    messagingSenderId: 'placeholder-sender-id',
-    projectId: 'placeholder-project-id',
-    authDomain: 'placeholder-project-id.firebaseapp.com',
-    storageBucket: 'placeholder-project-id.appspot.com',
+    apiKey: 'AIzaSyBUzWteFj9qVkFsGOOJMfoCiRKMpOxYC-Y',
+    appId: '1:158422290745:web:c516c76a5df1aa49a018e8',
+    messagingSenderId: '158422290745',
+    projectId: 'omni-service-hub',
+    authDomain: 'omni-service-hub.firebaseapp.com',
+    storageBucket: 'omni-service-hub.firebasestorage.app',
+    measurementId: 'G-D0PXBNKNVG',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'placeholder-api-key',
-    appId: 'placeholder-app-id',
-    messagingSenderId: 'placeholder-sender-id',
-    projectId: 'placeholder-project-id',
-    storageBucket: 'placeholder-project-id.appspot.com',
+    apiKey: 'AIzaSyC3fOcT3doA1SuQqQyev5LRkpGmbY0rv8E',
+    appId: '1:158422290745:android:23a7035123d8b5b5a018e8',
+    messagingSenderId: '158422290745',
+    projectId: 'omni-service-hub',
+    storageBucket: 'omni-service-hub.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'placeholder-api-key',
-    appId: 'placeholder-app-id',
-    messagingSenderId: 'placeholder-sender-id',
-    projectId: 'placeholder-project-id',
-    storageBucket: 'placeholder-project-id.appspot.com',
+    apiKey: 'AIzaSyB-CbL3iNKWjDnTyyc1S-CaOX3uAds_cCQ',
+    appId: '1:158422290745:ios:340a2b02cad14f57a018e8',
+    messagingSenderId: '158422290745',
+    projectId: 'omni-service-hub',
+    storageBucket: 'omni-service-hub.firebasestorage.app',
     iosBundleId: 'com.example.omniServiceHub',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBUzWteFj9qVkFsGOOJMfoCiRKMpOxYC-Y',
+    appId: '1:158422290745:web:02bd48ffbef5dc1fa018e8',
+    messagingSenderId: '158422290745',
+    projectId: 'omni-service-hub',
+    authDomain: 'omni-service-hub.firebaseapp.com',
+    storageBucket: 'omni-service-hub.firebasestorage.app',
+    measurementId: 'G-1MFMNNPSLY',
+  );
+
 }

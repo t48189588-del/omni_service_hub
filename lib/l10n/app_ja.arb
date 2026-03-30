@@ -1,4 +1,8 @@
 {
   "appName": "OmniService Hub",
-  "loading": "読み込み中..."
+  "loading": "読み込み中...",
+  "app_title": "OmniService Hub ダッシュボード",
+  "book_button": "今すぐ予約",
+  "payment_confirmed": "支払い完了",
+  "select_service": "サービスを選択"
 }

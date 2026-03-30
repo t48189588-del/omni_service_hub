@@ -1,4 +1,8 @@
 {
   "appName": "OmniService Hub",
-  "loading": "Cargando..."
+  "loading": "Cargando...",
+  "app_title": "Panel de OmniService Hub",
+  "book_button": "Reservar Ahora",
+  "payment_confirmed": "Pago Confirmado",
+  "select_service": "Seleccionar un Servicio"
 }

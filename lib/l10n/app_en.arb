@@ -1,10 +1,8 @@
 {
   "appName": "OmniService Hub",
-  "@appName": {
-    "description": "The name of the application"
-  },
   "loading": "Loading...",
-  "@loading": {
-    "description": "Text displayed while things are loading"
-  }
+  "app_title": "OmniService Hub Dashboard",
+  "book_button": "Book Now",
+  "payment_confirmed": "Payment Confirmed",
+  "select_service": "Select a Service"
 }

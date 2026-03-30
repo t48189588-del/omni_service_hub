@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158422290745",
+    "project_id": "omni-service-hub",
+    "storage_bucket": "omni-service-hub.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158422290745:android:23a7035123d8b5b5a018e8",
+        "android_client_info": {
+          "package_name": "com.example.omni_service_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3fOcT3doA1SuQqQyev5LRkpGmbY0rv8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
