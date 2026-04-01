@@ -1,0 +1,25 @@
+{
+  "zh": [
+    "durationLabel",
+    "conflictError",
+    "bookingSuccess",
+    "pending",
+    "confirmed",
+    "cancelled",
+    "approve",
+    "reschedule",
+    "manageAppointments"
+  ],
+
+  "zh_Hans": [
+    "durationLabel",
+    "conflictError",
+    "bookingSuccess",
+    "pending",
+    "confirmed",
+    "cancelled",
+    "approve",
+    "reschedule",
+    "manageAppointments"
+  ]
+}

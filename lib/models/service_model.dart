@@ -6,6 +6,7 @@ class ServiceModel {
   final String description;
   final double price;
   final int durationMinutes;
+  final int bufferMinutes;
   final DateTime? createdAt;
 
   ServiceModel({
@@ -14,6 +15,7 @@ class ServiceModel {
     required this.description,
     required this.price,
     this.durationMinutes = 60,
+    this.bufferMinutes = 10,
     this.createdAt,
   });
 
@@ -25,6 +27,7 @@ class ServiceModel {
       description: data['description'] ?? '',
       price: (data['price'] ?? 0.0).toDouble(),
       durationMinutes: data['durationMinutes'] ?? 60,
+      bufferMinutes: data['bufferMinutes'] ?? 10,
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
     );
   }
@@ -35,6 +38,7 @@ class ServiceModel {
       'description': description,
       'price': price,
       'durationMinutes': durationMinutes,
+      'bufferMinutes': bufferMinutes,
       'createdAt': createdAt ?? FieldValue.serverTimestamp(),
     };
   }

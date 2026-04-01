@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:math';
 import '../models/service_model.dart';
-import '../models/appointment_model.dart';
+import '../models/booking_model.dart';
 
 class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -11,6 +12,7 @@ class DatabaseService {
     required String uid,
     required String email,
     required String businessName,
+    String businessType = 'massage',
   }) async {
     try {
       // 1. Create a new unique Tenant ID
@@ -18,16 +20,20 @@ class DatabaseService {
       final tenantId = tenantRef.id;
 
       // 2. Perform a multi-document write
-      // Note: In rules we allow matching 'tenantId' for creation if authenticated
       await _db.runTransaction((transaction) async {
         // Create the Tenant document
         transaction.set(tenantRef, {
           'name': businessName,
           'createdAt': FieldValue.serverTimestamp(),
           'ownerUid': uid,
+          'businessType': businessType,
           'config': {
             'currency': 'USD',
             'timezone': 'UTC',
+            'businessHours': {
+              'start': 900,
+              'end': 1700,
+            },
           },
         });
 
@@ -118,7 +124,7 @@ class DatabaseService {
     final snapshot = await _db
         .collection('tenants')
         .doc(tenantId)
-        .collection('appointments')
+        .collection('bookings') // Standardized
         .where('startTime', isGreaterThanOrEqualTo: Timestamp.fromDate(dayStart))
         .where('startTime', isLessThan: Timestamp.fromDate(dayEnd))
         .get();
@@ -127,46 +133,124 @@ class DatabaseService {
       final existingStart = (doc['startTime'] as Timestamp).toDate();
       final existingEnd = (doc['endTime'] as Timestamp).toDate();
       
-      // Add 10 min buffer to existing appointments for check
       final bufferedExistingEnd = existingEnd.add(const Duration(minutes: 10));
-      final bufferedRequestedEnd = endTime.add(const Duration(minutes: 10));
 
-      // Standard overlap check: (StartA < EndB) && (EndA > StartB)
       if (startTime.isBefore(bufferedExistingEnd) && endTime.add(const Duration(minutes: 10)).isAfter(existingStart)) {
-        // Double check: specifically if requested start is before existing end+buffer, 
-        // AND requested end+buffer is after existing start.
         return false; 
       }
     }
     return true;
   }
 
-  Future<void> createAppointment(String tenantId, AppointmentModel appointment) async {
-    await _db
-        .collection('tenants')
-        .doc(tenantId)
-        .collection('appointments')
-        .add(appointment.toMap());
-  }
-
-  Stream<List<AppointmentModel>> getAppointments(String tenantId) {
+  /// Fetches confirmed bookings for a tenant
+  Stream<List<BookingModel>> getBookings(String tenantId) {
     return _db
         .collection('tenants')
         .doc(tenantId)
-        .collection('appointments')
+        .collection('bookings')
         .orderBy('startTime', descending: false)
         .snapshots()
         .map((snapshot) => snapshot.docs
-            .map((doc) => AppointmentModel.fromFirestore(doc))
+            .map((doc) => BookingModel.fromFirestore(doc))
             .toList());
   }
 
-  Future<void> updateAppointmentStatus(String tenantId, String appId, AppointmentStatus status) async {
+  /// Updates the status of a specific booking
+  Future<void> updateBookingStatus(String tenantId, String appId, BookingStatus status) async {
     await _db
         .collection('tenants')
         .doc(tenantId)
-        .collection('appointments')
+        .collection('bookings')
         .doc(appId)
         .update({'status': status.name});
+  }
+  /// Day 3 Atomic Shield: Atomic Transaction for Booking
+  Future<String> performBooking(String tenantId, BookingModel booking, int totalDurationPlusBuffer) async {
+    final startOfDayStr = "${booking.startTime.year}-${booking.startTime.month.toString().padLeft(2, '0')}-${booking.startTime.day.toString().padLeft(2, '0')}";
+    final dayRef = _db.collection('tenants').doc(tenantId).collection('days').doc(startOfDayStr);
+    final bookingsRef = _db.collection('tenants').doc(tenantId).collection('bookings');
+    
+    final String humanId = _generateHumanReadableId();
+
+    await _db.runTransaction((transaction) async {
+      // 1. Fetch the daily lock document
+      final daySnapshot = await transaction.get(dayRef);
+      final List<dynamic> currentIntervals = daySnapshot.exists ? daySnapshot.get('intervals') ?? [] : [];
+      final List<Map<String, dynamic>> existingIntervals = List<Map<String, dynamic>>.from(currentIntervals);
+
+      // 2. Re-verify availability using the specific buffer from Service
+      final isAvailable = _isIntervalAvailableTransaction(
+        booking.startTime, 
+        totalDurationPlusBuffer, 
+        existingIntervals
+      );
+
+      if (!isAvailable) {
+        throw FirebaseException(
+          plugin: 'cloud_firestore',
+          code: 'already-booked',
+          message: 'The slot was taken while you were processing.',
+        );
+      }
+
+      // 3. Update the daily lock document
+      final newInterval = {
+        'start': Timestamp.fromDate(booking.startTime),
+        'end': Timestamp.fromDate(booking.endTime),
+        'serviceId': booking.serviceId,
+      };
+
+      if (!daySnapshot.exists) {
+        transaction.set(dayRef, {'intervals': [newInterval]});
+      } else {
+        transaction.update(dayRef, {
+          'intervals': FieldValue.arrayUnion([newInterval])
+        });
+      }
+
+      // 4. Create the detailed booking record
+      final newBookingRef = bookingsRef.doc();
+      final finalBooking = booking.toMap();
+      finalBooking['humanReadableId'] = humanId; // Assign the generated ID
+      
+      transaction.set(newBookingRef, finalBooking);
+    });
+
+    return humanId;
+  }
+
+  String _generateHumanReadableId() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const nums = '123456789';
+    final random = Random();
+    
+    String res = '';
+    for (int i = 0; i < 3; i++) {
+      res += chars[random.nextInt(chars.length)];
+    }
+    res += '-';
+    for (int i = 0; i < 3; i++) {
+      res += nums[random.nextInt(nums.length)];
+    }
+    
+    return res;
+  }
+
+  // Transaction-specific interval overlap check
+  bool _isIntervalAvailableTransaction(DateTime startTime, int durationMinutes, List<Map<String, dynamic>> existing) {
+    final endTimeWithBuffer = startTime.add(Duration(minutes: durationMinutes + 10));
+    
+    for (var interval in existing) {
+      final iStart = (interval['start'] as Timestamp).toDate();
+      final iEnd = (interval['end'] as Timestamp).toDate();
+      
+      // Existing intervals also effective reserve a 10-minute window AFTER their end time.
+      final existingEndWithBuffer = iEnd.add(const Duration(minutes: 10));
+
+      if (startTime.isBefore(existingEndWithBuffer) && endTimeWithBuffer.isAfter(iStart)) {
+        return false;
+      }
+    }
+    return true;
   }
 }

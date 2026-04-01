@@ -7,11 +7,13 @@ import 'l10n/app_localizations.dart';
 import 'firebase_options.dart';
 import 'providers/tenant_provider.dart';
 import 'providers/locale_provider.dart';
+import 'providers/booking_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/services_screen.dart';
 import 'screens/booking_page.dart';
 import 'screens/appointments_screen.dart';
+import 'screens/booking_success_screen.dart';
 import 'utils/regional_formatter.dart';
 import 'widgets/locale_switcher.dart';
 
@@ -27,6 +29,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => TenantProvider()),
+        ChangeNotifierProvider(create: (_) => BookingProvider()),
       ],
       child: const OmniServiceHubApp(),
     ),
@@ -52,6 +55,12 @@ class OmniServiceHubApp extends StatelessWidget {
               builder: (context) => BookingPage(tenantId: tenantId),
             );
           }
+        }
+        if (settings.name == '/booking_success') {
+          final humanId = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (context) => BookingSuccessScreen(humanReadableId: humanId),
+          );
         }
         if (settings.name == '/appointments') {
           return MaterialPageRoute(
@@ -106,7 +115,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
     final tenantProvider = context.watch<TenantProvider>();
     final l10n = AppLocalizations.of(context);
 
-    // 1. Loading state (Authenticating or fetching Tenant)
     if (tenantProvider.isLoading) {
       return Scaffold(
         body: Center(
@@ -122,12 +130,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
       );
     }
 
-    // 2. Logged In and Tenant Loaded
     if (tenantProvider.tenantId != null) {
       return const DashboardScreen();
     }
 
-    // 3. Not Logged In
     if (_showLogin) {
       return LoginScreen(onShowRegister: _toggleView);
     } else {
@@ -146,7 +152,6 @@ class DashboardScreen extends StatelessWidget {
     final config = tenantProvider.tenantConfig;
     final l10n = AppLocalizations.of(context);
     
-    // Determine active locale and currency (linked to language selector)
     final String currentLocale = localeProvider.locale.toString();
     final String currentCurrency = localeProvider.getCurrencyForLocale();
 
@@ -188,7 +193,6 @@ class DashboardScreen extends StatelessWidget {
             Text("${l10n?.tenantIdLabel ?? 'Tenant ID'}: ${tenantProvider.tenantId}"),
             const SizedBox(height: 32),
             
-            // Regional Formatting Demo
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -216,7 +220,6 @@ class DashboardScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             
-            // Localized Actions Demo
             Wrap(
               spacing: 16,
               children: [
@@ -239,7 +242,6 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // Navigate to customer view
                     Navigator.pushNamed(context, '/booking', arguments: tenantProvider.tenantId);
                   },
                   icon: const Icon(Icons.add_shopping_cart),
