@@ -108,6 +108,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get haveAccount => 'すでにアカウントをお持ちですか？サインイン';
 
   @override
+  String get businessTypeLabel => 'Business Type';
+
+  @override
+  String get businessTypeHint => 'e.g. Salon, Consulting, Logistics';
+
+  @override
   String get manageServices => 'サービス管理';
 
   @override

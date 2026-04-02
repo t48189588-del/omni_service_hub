@@ -57,6 +57,15 @@ class DatabaseService {
     return _db.collection('tenants').doc(tenantId).get();
   }
 
+  Future<void> updateTenantConfig(String tenantId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('tenants').doc(tenantId).update(data);
+    } catch (e) {
+      debugPrint("DatabaseService Error (UpdateTenant): $e");
+      rethrow;
+    }
+  }
+
   // --- Service Management ---
 
   Stream<List<ServiceModel>> getServices(String tenantId) {
@@ -86,7 +95,7 @@ class DatabaseService {
 
   Future<void> updateService(String tenantId, ServiceModel service) async {
     try {
-      if (service.id == null) throw "Service ID missing for update";
+      if (service.id.isEmpty) throw "Service ID missing for update";
       await _db
           .collection('tenants')
           .doc(tenantId)
@@ -148,6 +157,25 @@ class DatabaseService {
         .collection('tenants')
         .doc(tenantId)
         .collection('bookings')
+        .orderBy('startTime', descending: false)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => BookingModel.fromFirestore(doc))
+            .toList());
+  }
+
+  /// Fetches bookings for today based on the local timezone
+  Stream<List<BookingModel>> getTodayBookings(String tenantId) {
+    final now = DateTime.now();
+    final dayStart = DateTime(now.year, now.month, now.day);
+    final dayEnd = dayStart.add(const Duration(days: 1));
+
+    return _db
+        .collection('tenants')
+        .doc(tenantId)
+        .collection('bookings')
+        .where('startTime', isGreaterThanOrEqualTo: Timestamp.fromDate(dayStart))
+        .where('startTime', isLessThan: Timestamp.fromDate(dayEnd))
         .orderBy('startTime', descending: false)
         .snapshots()
         .map((snapshot) => snapshot.docs

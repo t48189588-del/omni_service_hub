@@ -109,6 +109,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get haveAccount => '已有账号？登录';
 
   @override
+  String get businessTypeLabel => 'Business Type';
+
+  @override
+  String get businessTypeHint => 'e.g. Salon, Consulting, Logistics';
+
+  @override
   String get manageServices => '管理服务';
 
   @override

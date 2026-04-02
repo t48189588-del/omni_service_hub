@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,8 +22,11 @@ class TenantProvider with ChangeNotifier {
     _init();
   }
 
+  StreamSubscription<User?>? _authSubscription;
+  StreamSubscription<DocumentSnapshot>? _tenantSubscription;
+
   void _init() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    _authSubscription = FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         _loadTenant(user.uid);
       } else {
@@ -31,29 +35,41 @@ class TenantProvider with ChangeNotifier {
     });
   }
 
-  // Main background loading
-  Future<void> _loadTenant(String uid) async {
+  // Main background loading and listening
+  void _loadTenant(String uid) {
     _isLoading = true;
     notifyListeners();
 
-    try {
-      final userDoc = await _firestore.collection('users').doc(uid).get();
+    _firestore.collection('users').doc(uid).get().then((userDoc) {
       if (userDoc.exists && userDoc.data() != null) {
         _tenantId = userDoc.data()!['tenantId'] as String?;
-        
-        if (_tenantId != null) {
-          final tenantDoc = await _firestore.collection('tenants').doc(_tenantId!).get();
-          if (tenantDoc.exists) {
-            _tenantConfig = tenantDoc.data();
-          }
+        if (_tenantId != null && _tenantId!.isNotEmpty) {
+          _tenantSubscription?.cancel();
+          _tenantSubscription = _firestore.collection('tenants').doc(_tenantId!).snapshots().listen((tenantDoc) {
+            if (tenantDoc.exists) {
+              _tenantConfig = tenantDoc.data();
+              _isLoading = false;
+              notifyListeners();
+            } else {
+              debugPrint("Tenant document not found for ID: \$_tenantId");
+              _clearTenant();
+            }
+          }, onError: (e) {
+            debugPrint("Error listening to tenant: $e");
+            _clearTenant();
+          });
+        } else {
+          debugPrint("User \${userDoc.id} has no valid tenantId assigned.");
+          _clearTenant();
         }
+      } else {
+        debugPrint("User profile missing for uid: \$uid");
+        _clearTenant();
       }
-    } catch (e) {
-      debugPrint("Error loading tenant: $e");
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    }).catchError((e) {
+      debugPrint("Error loading user profile: $e");
+      _clearTenant();
+    });
   }
 
   // Registration Logic
@@ -105,9 +121,27 @@ class TenantProvider with ChangeNotifier {
   }
 
   void _clearTenant() {
+    _tenantSubscription?.cancel();
     _tenantId = null;
     _tenantConfig = null;
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<void> updateBusinessSettings(Map<String, dynamic> data) async {
+    if (_tenantId == null) return;
+    try {
+      await _dbService.updateTenantConfig(_tenantId!, data);
+    } catch (e) {
+      debugPrint("Error updating business settings: $e");
+      rethrow;
+    }
+  }
+
+  @override
+  void dispose() {
+    _authSubscription?.cancel();
+    _tenantSubscription?.cancel();
+    super.dispose();
   }
 }

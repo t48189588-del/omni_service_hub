@@ -111,6 +111,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get haveAccount => '¿Ya tienes una cuenta? Iniciar Sesión';
 
   @override
+  String get businessTypeLabel => 'Business Type';
+
+  @override
+  String get businessTypeHint => 'e.g. Salon, Consulting, Logistics';
+
+  @override
   String get manageServices => 'Gestionar Servicios';
 
   @override

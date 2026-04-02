@@ -301,6 +301,18 @@ abstract class AppLocalizations {
   /// **'Already have an account? Sign In'**
   String get haveAccount;
 
+  /// No description provided for @businessTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Type'**
+  String get businessTypeLabel;
+
+  /// No description provided for @businessTypeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Salon, Consulting, Logistics'**
+  String get businessTypeHint;
+
   /// No description provided for @manageServices.
   ///
   /// In en, this message translates to:

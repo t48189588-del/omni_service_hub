@@ -16,6 +16,8 @@ import 'screens/appointments_screen.dart';
 import 'screens/booking_success_screen.dart';
 import 'utils/regional_formatter.dart';
 import 'widgets/locale_switcher.dart';
+import 'screens/admin_dashboard.dart';
+import 'screens/settings_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +67,11 @@ class OmniServiceHubApp extends StatelessWidget {
         if (settings.name == '/appointments') {
           return MaterialPageRoute(
             builder: (context) => const AppointmentsScreen(),
+          );
+        }
+        if (settings.name == '/settings') {
+          return MaterialPageRoute(
+            builder: (context) => const SettingsScreen(),
           );
         }
         return null;
@@ -139,119 +146,5 @@ class _AuthWrapperState extends State<AuthWrapper> {
     } else {
       return RegisterScreen(onShowLogin: _toggleView);
     }
-  }
-}
-
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final tenantProvider = context.watch<TenantProvider>();
-    final localeProvider = context.watch<LocaleProvider>();
-    final config = tenantProvider.tenantConfig;
-    final l10n = AppLocalizations.of(context);
-    
-    final String currentLocale = localeProvider.locale.toString();
-    final String currentCurrency = localeProvider.getCurrencyForLocale();
-
-    final formatter = RegionalFormatter(
-      locale: currentLocale,
-      currencyCode: currentCurrency,
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(config?['name'] ?? l10n?.appTitle ?? 'Dashboard'),
-        actions: [
-          const LocaleSwitcher(),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n?.settings ?? 'Settings coming soon')),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => context.read<TenantProvider>().logout(),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            const Icon(Icons.business_center_outlined, size: 64, color: Colors.indigo),
-            const SizedBox(height: 16),
-            Text(
-              l10n?.businessActive ?? "Business Active", 
-              style: Theme.of(context).textTheme.headlineSmall
-            ),
-            const SizedBox(height: 8),
-            Text("${l10n?.tenantIdLabel ?? 'Tenant ID'}: ${tenantProvider.tenantId}"),
-            const SizedBox(height: 32),
-            
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(l10n?.regionalPrecision ?? "Regional Precision", style: Theme.of(context).textTheme.titleMedium),
-                    const Divider(),
-                    ListTile(
-                      leading: const Icon(Icons.payments_outlined),
-                      title: Text(l10n?.samplePrice ?? "Sample Price"),
-                      subtitle: Text("${l10n?.currencySymbol ?? '\$'} ($currentCurrency)"),
-                      trailing: Text(
-                        formatter.formatCurrency(15000.0),
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.calendar_today_outlined),
-                      title: Text(l10n?.currentDate ?? "Current Date"),
-                      trailing: Text(formatter.formatDate(DateTime.now())),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            
-            Wrap(
-              spacing: 16,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ServicesScreen()),
-                    );
-                  },
-                  icon: const Icon(Icons.category_outlined),
-                  label: Text(l10n?.manageServices ?? 'Manage Services'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/appointments');
-                  },
-                  icon: const Icon(Icons.calendar_month_outlined),
-                  label: Text(l10n?.manageAppointments ?? 'Manage Appointments'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/booking', arguments: tenantProvider.tenantId);
-                  },
-                  icon: const Icon(Icons.add_shopping_cart),
-                  label: Text(l10n?.bookNow ?? 'Book'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

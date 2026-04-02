@@ -15,6 +15,7 @@ class BookingModel {
   final DateTime endTime;
   final BookingStatus status;
   final String humanReadableId;
+  final double price;
   final Map<String, dynamic> customFields;
 
   BookingModel({
@@ -30,6 +31,7 @@ class BookingModel {
     required this.endTime,
     this.status = BookingStatus.confirmed,
     required this.humanReadableId,
+    this.price = 0.0,
     this.customFields = const {},
   });
 
@@ -48,6 +50,7 @@ class BookingModel {
       endTime: (data['endTime'] as Timestamp).toDate(),
       status: BookingStatus.values.firstWhere((e) => e.name == data['status'], orElse: () => BookingStatus.confirmed),
       humanReadableId: data['humanReadableId'] ?? '',
+      price: (data['price'] ?? 0.0).toDouble(),
       customFields: data['customFields'] ?? {},
     );
   }
@@ -65,6 +68,7 @@ class BookingModel {
       'endTime': Timestamp.fromDate(endTime),
       'status': status.name,
       'humanReadableId': humanReadableId,
+      'price': price,
       'customFields': customFields,
     };
   }

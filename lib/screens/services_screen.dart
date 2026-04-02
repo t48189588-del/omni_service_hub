@@ -6,6 +6,7 @@ import '../models/service_model.dart';
 import '../utils/regional_formatter.dart';
 import '../providers/locale_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/locale_switcher.dart';
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});
@@ -119,7 +120,10 @@ class ServicesScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n?.manageServices ?? 'Service Management')),
+      appBar: AppBar(
+        title: Text(l10n?.manageServices ?? 'Service Management'),
+        actions: const [LocaleSwitcher()],
+      ),
       body: StreamBuilder<List<ServiceModel>>(
         stream: DatabaseService().getServices(tenantId),
         builder: (context, snapshot) {

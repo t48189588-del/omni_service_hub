@@ -32,6 +32,8 @@
   "businessNameRequired": "Business Name required",
   "createAccountButton": "Create Account",
   "haveAccount": "Already have an account? Sign In",
+  "businessTypeLabel": "Business Type",
+  "businessTypeHint": "e.g. Salon, Consulting, Logistics",
   "manageServices": "Manage Services",
   "manageAppointments": "Manage Appointments",
   "addService": "Add New Service",
