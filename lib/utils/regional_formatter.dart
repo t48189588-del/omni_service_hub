@@ -33,4 +33,8 @@ class RegionalFormatter {
   String formatDate(DateTime date) {
     return DateFormat.yMd(locale).format(date);
   }
+
+  String formatTime(DateTime date) {
+  return DateFormat.jm(locale).format(date);
+}
 }

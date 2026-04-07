@@ -13,16 +13,19 @@ class TenantProvider with ChangeNotifier {
   String? _tenantId;
   Map<String, dynamic>? _tenantConfig;
   bool _isLoading = false;
+  String? _errorMessage;
 
   String? get tenantId => _tenantId;
   Map<String, dynamic>? get tenantConfig => _tenantConfig;
   bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   TenantProvider() {
     _init();
   }
 
   StreamSubscription<User?>? _authSubscription;
+  StreamSubscription<DocumentSnapshot>? _userSubscription;
   StreamSubscription<DocumentSnapshot>? _tenantSubscription;
 
   void _init() {
@@ -38,36 +41,48 @@ class TenantProvider with ChangeNotifier {
   // Main background loading and listening
   void _loadTenant(String uid) {
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
 
-    _firestore.collection('users').doc(uid).get().then((userDoc) {
+    _userSubscription?.cancel();
+    _userSubscription = _firestore.collection('users').doc(uid).snapshots().listen((userDoc) {
       if (userDoc.exists && userDoc.data() != null) {
-        _tenantId = userDoc.data()!['tenantId'] as String?;
-        if (_tenantId != null && _tenantId!.isNotEmpty) {
-          _tenantSubscription?.cancel();
-          _tenantSubscription = _firestore.collection('tenants').doc(_tenantId!).snapshots().listen((tenantDoc) {
-            if (tenantDoc.exists) {
-              _tenantConfig = tenantDoc.data();
-              _isLoading = false;
-              notifyListeners();
-            } else {
-              debugPrint("Tenant document not found for ID: \$_tenantId");
-              _clearTenant();
-            }
-          }, onError: (e) {
-            debugPrint("Error listening to tenant: $e");
-            _clearTenant();
-          });
+        final newTenantId = userDoc.data()!['tenantId'] as String?;
+        if (newTenantId != null && newTenantId.isNotEmpty) {
+          if (newTenantId != _tenantId) {
+            _tenantId = newTenantId;
+            _setupTenantSubscription(_tenantId!);
+          }
         } else {
-          debugPrint("User \${userDoc.id} has no valid tenantId assigned.");
-          _clearTenant();
+          _errorMessage = "User profile has no assigned tenant.";
+          _isLoading = false;
+          notifyListeners();
         }
       } else {
-        debugPrint("User profile missing for uid: \$uid");
+        // Doc doesn't exist yet - this is expected during registration for a moment
+        // We stay in loading state
+        debugPrint("User profile doc not found yet for uid: $uid");
+      }
+    }, onError: (e) {
+      _errorMessage = "Error loading user profile: $e";
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  void _setupTenantSubscription(String tId) {
+    _tenantSubscription?.cancel();
+    _tenantSubscription = _firestore.collection('tenants').doc(tId).snapshots().listen((tenantDoc) {
+      if (tenantDoc.exists) {
+        _tenantConfig = tenantDoc.data();
+        _isLoading = false;
+        notifyListeners();
+      } else {
+        _errorMessage = "Business configuration not found.";
         _clearTenant();
       }
-    }).catchError((e) {
-      debugPrint("Error loading user profile: $e");
+    }, onError: (e) {
+      _errorMessage = "Error listening to business info: $e";
       _clearTenant();
     });
   }
@@ -79,6 +94,7 @@ class TenantProvider with ChangeNotifier {
     required String businessName,
   }) async {
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
 
     try {
@@ -91,29 +107,31 @@ class TenantProvider with ChangeNotifier {
           email: email,
           businessName: businessName,
         );
-        // Note: authStateChanges listener will trigger _loadTenant
+        // authStateChanges listener handles the UI transition via _loadTenant
       }
     } catch (e) {
       debugPrint("Registration error: $e");
-      rethrow;
-    } finally {
       _isLoading = false;
+      _errorMessage = e.toString();
       notifyListeners();
+      rethrow;
     }
   }
 
   Future<void> login(String email, String password) async {
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
     try {
       await _authService.signIn(email, password);
     } catch (e) {
       debugPrint("Login error: $e");
-      rethrow;
-    } finally {
       _isLoading = false;
+      _errorMessage = e.toString();
       notifyListeners();
+      rethrow;
     }
+    // We don't set _isLoading = false here; _loadTenant will do it.
   }
 
   Future<void> logout() async {
@@ -121,6 +139,7 @@ class TenantProvider with ChangeNotifier {
   }
 
   void _clearTenant() {
+    _userSubscription?.cancel();
     _tenantSubscription?.cancel();
     _tenantId = null;
     _tenantConfig = null;
@@ -141,6 +160,7 @@ class TenantProvider with ChangeNotifier {
   @override
   void dispose() {
     _authSubscription?.cancel();
+    _userSubscription?.cancel();
     _tenantSubscription?.cancel();
     super.dispose();
   }

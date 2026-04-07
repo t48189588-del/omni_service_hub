@@ -26,16 +26,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
             password: _passwordController.text,
             businessName: _businessNameController.text.trim(),
           );
+          // 2. Navigate to Settings
+        // We use pushReplacementNamed so the user can't "Go Back" to the signup form
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed('/settings');
+          
+          // Optional: Show a quick success message
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Welcome! Let's finish your business setup.")),
+          );
+        }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Registration failed: $e")),
-      );
+      // Error is now handled in the Provider and shown in the UI
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final tenantProvider = context.watch<TenantProvider>();
 
     return Scaffold(
       body: Center(
@@ -63,11 +72,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    l10n?.createBusinessDesc ?? "Create your account and initialize your service hub in seconds.",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                    Text(
+                      l10n?.createBusinessDesc ?? "Create your account and initialize your service hub in seconds.",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    if (tenantProvider.errorMessage != null) ...[
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.red.shade200),
+                        ),
+                        child: Text(
+                          tenantProvider.errorMessage!,
+                          style: TextStyle(color: Colors.red.shade900, fontSize: 13),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   const SizedBox(height: 32),
                   TextFormField(
                     controller: _businessNameController,

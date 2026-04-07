@@ -25,15 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
             _passwordController.text,
           );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Login failed: $e")),
-      );
+      // Error is now also handled in the provider and exposed via errorMessage
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final tenantProvider = context.watch<TenantProvider>();
 
     return Scaffold(
       body: Center(
@@ -66,6 +65,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
+                  if (tenantProvider.errorMessage != null) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.red.shade200),
+                      ),
+                      child: Text(
+                        tenantProvider.errorMessage!,
+                        style: TextStyle(color: Colors.red.shade900, fontSize: 13),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailController,

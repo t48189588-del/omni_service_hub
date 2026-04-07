@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: DropdownButtonFormField<int>(
                             value: _startHour,
                             decoration: const InputDecoration(labelText: 'Opening Hour'),
-                            items: List.generate(24, (i) => DropdownMenuItem(value: i, child: Text("\$i:00"))),
+                            items: List.generate(24, (i) => DropdownMenuItem(value: i, child: Text("$i:00"))),
                             onChanged: (v) => setState(() => _startHour = v ?? 9),
                           ),
                         ),
@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: DropdownButtonFormField<int>(
                             value: _endHour,
                             decoration: const InputDecoration(labelText: 'Closing Hour'),
-                            items: List.generate(24, (i) => DropdownMenuItem(value: i, child: Text("\$i:00"))),
+                            items: List.generate(24, (i) => DropdownMenuItem(value: i, child: Text("$i:00"))),
                             onChanged: (v) => setState(() => _endHour = v ?? 17),
                           ),
                         ),

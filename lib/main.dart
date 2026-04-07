@@ -99,6 +99,7 @@ class OmniServiceHubApp extends StatelessWidget {
         Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
       ],
       home: const AuthWrapper(),
+      // home: const DashboardScreen(),
     );
   }
 }

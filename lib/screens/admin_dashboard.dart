@@ -121,7 +121,7 @@ class DashboardScreen extends StatelessWidget {
               stream: DatabaseService().getTodayBookings(tenantProvider.tenantId!),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Center(child: Text("Error loading agenda: \${snapshot.error}"));
+                  return Center(child: Text("Error loading agenda: ${snapshot.error}"));
                 }
                 if (!snapshot.hasData) {
                   return const Center(child: CircularProgressIndicator());
@@ -149,8 +149,10 @@ class DashboardScreen extends StatelessWidget {
                                 final booking = sortedBookings[index];
                                 return ListTile(
                                   leading: const Icon(Icons.event_seat),
-                                  title: Text("Client: \${booking.clientId != null && booking.clientId!.isNotEmpty ? booking.clientId : 'Guest'}"),
-                                  subtitle: Text("\${formatter.formatTime(booking.startTime)} - \${formatter.formatTime(booking.endTime)}"),
+                                  title: Text(
+                                    "Client: ${(booking.clientId?.isNotEmpty ?? false) ? booking.clientName : 'Guest'}",
+                                  ),
+                                  subtitle: Text("Date: ${formatter.formatDate(booking.startTime)} Time: ${formatter.formatTime(booking.startTime)}"),                      
                                   trailing: Chip(
                                     label: Text(booking.status.name.toUpperCase()),
                                     backgroundColor: booking.status == BookingStatus.confirmed ? Colors.green.shade100 : Colors.grey.shade200,
@@ -181,7 +183,7 @@ class DashboardScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _StatCard(title: "Today's Revenue", value: formatter.formatCurrency(revenue)),
-          _StatCard(title: "Confirmed", value: "\$count"),
+          _StatCard(title: "Confirmed", value: "$count"),
         ],
       ),
     );
